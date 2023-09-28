@@ -7,8 +7,10 @@ const port = 5000;
 
 app.use(express.json());
 app.use(cors());
+// const uri = "mongodb+srv://<username>:<password>@cluster0.7cqr184.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.7cqr184.mongodb.net/?retryWrites=true&w=majority`;
 
-const uri = process.env.DATABASE_URI;
+// const uri = process.env.DATABASE_URI;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -20,7 +22,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const db = await client.db('taskmaster');
+    const db = await client.db('taskMaster');
     const tasksCollection = db.collection('tasks');
 
     console.log('Successfully connected to MongoDB!');
